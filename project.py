@@ -1,4 +1,6 @@
 from expenses import Expenses
+import matplotlib.pyplot as plt
+import numpy as np
 import csv
 
 
@@ -52,8 +54,34 @@ def add_expenses():
 
 def expense_chart():
     print("Successfully in expense_chart")
+    barwidth = 0.25
+    fig = plt.subplots(figsize=(12, 8))
 
+    my_expense = Expenses.get_my_expense()    
+    my_expense.remove(my_expense[0])
+    your_expense = [int(row[1]) for row in my_expense]
 
+    budget = Expenses.get_budget()    
+    budget.remove(budget[0])
+    max_budget = [int(row[1]) for row in budget]
+
+    categories = [row[0] for row in budget]
+
+    br1 = np.arange(len(your_expense))
+    br2 = np.array(br1, dtype=float) + barwidth
+        
+    plt.bar(br1, your_expense, width = barwidth, edgecolor = 'black', label = 'Expense')
+    plt.bar(br2, max_budget, color ='r', width = barwidth, edgecolor = 'black', label = 'Budget')
+
+    plt.title('Expenses Chart', fontsize = 20, fontweight ='bold')
+    plt.xlabel('Category', fontweight ='bold', fontsize = 15) 
+    plt.ylabel('Expenses', fontweight ='bold', fontsize = 15) 
+    plt.xticks([r + (barwidth/2) for r in range(len(your_expense))], categories)
+
+    plt.legend()
+    plt.savefig('expense_chart.png')
+    plt.show()
+   
 
 def get_budget():
     budget = []
