@@ -61,7 +61,7 @@ def expense_chart():
     my_expense.remove(my_expense[0])
     your_expense = [int(row[1]) for row in my_expense]
 
-    budget = Expenses.get_budget()    
+    budget = get_budget()    
     budget.remove(budget[0])
     max_budget = [int(row[1]) for row in budget]
 
