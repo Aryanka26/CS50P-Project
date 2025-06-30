@@ -11,10 +11,11 @@ def main():
             option = int(input())
             if option == 1:
                 add_expenses()
-                print(f"Expense added!!!")
+                print(f"\nAll expenses added!!!")
                 break
             elif option == 2:
                 expense_chart()
+                print("Chart Updated Successfully!!!\nOpen 'expense_chart.png' file to see the results:)")
                 break
             elif option == 3:
                 Expenses.clear_my_expense()
@@ -33,27 +34,32 @@ def add_expenses():
     print("Categories :-\n-Food\n-Stationary\n-Travel\n-Entertainment\n-Gifts")
     while True:
         try:
-            your_category = input("Enter Category: ").strip().capitalize()
-            your_expense = int(input("Expense: Rs."))
-            if not your_category:
-                print("Please enter valid category")
-                raise ValueError
+            while True:
+                try:
+                    your_category = input("Enter Category: ").strip().capitalize()
+                    your_expense = int(input("Expense: Rs."))
+                    if not your_category:
+                        print("Please enter valid category")
+                        raise ValueError
+                    break
+                except ValueError:
+                    pass
+            my_expense = Expenses.get_my_expense()
+            my_expense.remove(my_expense[0]) 
+            for row in my_expense:
+                category = row[0]
+                expense = int(row[1])
+                if your_category == category:
+                    expense = expense + your_expense
+                    row[1] = expense        
+            Expenses.write_my_expense(my_expense)   
+        except EOFError:
             break
-        except ValueError:
-            pass
-    my_expense = Expenses.get_my_expense()
-    my_expense.remove(my_expense[0]) 
-    for row in my_expense:
-        category = row[0]
-        expense = int(row[1])
-        if your_category == category:
-            expense = expense + your_expense
-            row[1] = expense        
-    Expenses.write_my_expense(my_expense)   
+            
+
     
 
 def expense_chart():
-    print("Successfully in expense_chart")
     barwidth = 0.25
     fig = plt.subplots(figsize=(12, 8))
 
@@ -81,6 +87,8 @@ def expense_chart():
     plt.legend()
     plt.savefig('expense_chart.png')
     plt.show()
+
+    
    
 
 def get_budget():
@@ -90,9 +98,6 @@ def get_budget():
         for row in reader:
             budget.append(row)
     return budget
-
-
-
 
 
 if __name__ == "__main__":
