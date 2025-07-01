@@ -19,7 +19,7 @@ def main():
                 break
             elif option == 3:
                 Expenses.clear_my_expense()
-                print("History cleared!!!")
+                print("Your expenses history is cleared!!!")
                 break
             else:
                 print("Value not 1, 2 or 3")
