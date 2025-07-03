@@ -46,18 +46,13 @@ def add_expenses():
                     pass
             my_expense = Expenses.get_my_expense()
             my_expense.remove(my_expense[0]) 
-            for row in my_expense:
-                category = row[0]
-                expense = int(row[1])
-                if your_category == category:
-                    expense = expense + your_expense
-                    row[1] = expense        
+            print('old expense: ', my_expense)
+            new_expense = append_expense(my_expense, your_category, your_expense)        
+            print("new expense: ", new_expense)
             Expenses.write_my_expense(my_expense)   
         except EOFError:
             break
-            
-
-    
+              
 
 def expense_chart():
     barwidth = 0.25
@@ -67,7 +62,7 @@ def expense_chart():
     my_expense.remove(my_expense[0])
     your_expense = [int(row[1]) for row in my_expense]
 
-    budget = get_budget()    
+    budget = get_budget("max_budget.csv")    
     budget.remove(budget[0])
     max_budget = [int(row[1]) for row in budget]
 
@@ -87,18 +82,27 @@ def expense_chart():
     plt.legend()
     plt.savefig('expense_chart.png')
     plt.show()
+  
 
-    
-   
-
-def get_budget():
+def get_budget(filename):
     budget = []
-    with open("max_budget.csv") as file:
+    with open(filename) as file:
         reader = csv.reader(file)
         for row in reader:
             budget.append(row)
     return budget
 
+
+def append_expense(my_list, your_category, your_expense):
+    print('mylist: ', my_list)
+    for row in my_list:
+        category = row[0]
+        expense = int(row[1])
+        if your_category == category:
+            expense = expense + your_expense
+            row[1] = expense
+    print('new my list: ', my_list)
+    return my_list
 
 if __name__ == "__main__":
     main()
