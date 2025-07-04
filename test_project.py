@@ -6,7 +6,7 @@ def test_append_expense():
                            ['Stationary', '30'],
                            ['Travel', '100'],
                            ['Entertainment', '59'],
-                           ['Gifts', '40']], 'food', 20) == [['Food', '50'],
+                           ['Gifts', '40']], 'Food', 20) == [['Food', 50],
                                                                ['Stationary', '30'],
                                                                ['Travel', '100'],
                                                                ['Entertainment', '59'],
@@ -15,8 +15,13 @@ def test_append_expense():
                            ['Stationary', '0'],
                            ['Travel', '0'],
                            ['Entertainment', '0'],
-                           ['Gifts', '0']], 'STATIONARY', 50) == [['Food', '0'],
-                                                                    ['Stationary', '50'],
+                           ['Gifts', '0']], 'Stationary', 50) == [['Food', '0'],
+                                                                    ['Stationary', 50],
                                                                     ['Travel', '0'],
                                                                     ['Entertainment', '0'],
                                                                     ['Gifts', '0']]
+
+
+def test_():
+    
+    
