@@ -11,11 +11,11 @@ def main():
             option = int(input())
             if option == 1:
                 add_expenses()
-                print(f"\nAll expenses added!!!")
+                print(f"\nAll expenses added :)")
                 break
             elif option == 2:
                 expense_chart()
-                print("Chart Updated Successfully!!!\nOpen 'expense_chart.png' file to see the results:)")
+                print("Chart Updated Successfully!!!\nOpen 'expense_chart.png' to see the results :)")
                 break
             elif option == 3:
                 Expenses.clear_my_expense()
@@ -36,35 +36,25 @@ def add_expenses():
         try:
             while True:
                 try:
-                    your_category = input("Enter Category: ").strip().capitalize()
+                    your_category = input("Enter Category: ")
                     your_expense = int(input("Expense: Rs."))
-                    if not your_category:
-                        print("Please enter valid category")
-                        raise ValueError
+                    your_category, your_expense = validate_input(your_category, your_expense)
                     break
                 except ValueError:
                     pass
             my_expense = Expenses.get_my_expense()
             my_expense.remove(my_expense[0]) 
             new_expense = append_expense(my_expense, your_category, your_expense)        
-            Expenses.write_my_expense(my_expense)   
+            Expenses.write_my_expense(my_expense)  
+            print("Expense Added!! (Press Ctrl+D if you wish to exit)") 
         except EOFError:
             break
               
 
-def expense_chart():
-    barwidth = 0.25
+def expense_chart(barwidth = 0.25):
     fig = plt.subplots(figsize=(12, 8))
 
-    my_expense = Expenses.get_my_expense()    
-    my_expense.remove(my_expense[0])
-    your_expense = [int(row[1]) for row in my_expense]
-
-    budget = get_budget("max_budget.csv")    
-    budget.remove(budget[0])
-    max_budget = [int(row[1]) for row in budget]
-
-    categories = [row[0] for row in budget]
+    your_expense, max_budget, categories = get_graph_input(Expenses.get_my_expense(), get_budget("max_budget.csv"))
 
     br1 = np.arange(len(your_expense))
     br2 = np.array(br1, dtype=float) + barwidth
@@ -99,6 +89,31 @@ def append_expense(my_list, your_category, your_expense):
             expense = expense + your_expense
             row[1] = expense
     return my_list
+
+
+def get_graph_input(list1, list2):   
+    list1.remove(list1[0])
+    your_expense = [int(row[1]) for row in list1]
+    
+    list2.remove(list2[0])    
+    max_budget = [int(row[1]) for row in list2]
+    categories = [row[0] for row in list2]
+
+    return your_expense, max_budget, categories
+
+
+def validate_input(category, expense):
+    category = category.strip().capitalize()
+    categories = ['Food', 'Stationary', 'Travel', 'Entertainment', 'Gifts']
+    if not category in categories or not category:
+        print("Invalid Category, did not add expense")
+        raise ValueError()
+    if expense < 0:
+        print("Invalid Expense, did not add expense")
+        raise ValueError()
+    return category, expense
+
+
 
 if __name__ == "__main__":
     main()
