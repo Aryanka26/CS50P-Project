@@ -49,8 +49,8 @@ def test_get_graph_input():
                                                         ['Travel', '200'], 
                                                         ['Entertainment', '100'], 
                                                         ['Gifts', '200']]) == ([0, 0, 0, 0, 0],
-                                                                                    [800, 200, 200, 100, 200], 
-                                                                                    ['Food', 'Stationary', 'Travel', 'Entertainment', 'Gifts'])
+                                                                                [800, 200, 200, 100, 200],                                                                                     
+                                                                                ['Food', 'Stationary', 'Travel', 'Entertainment', 'Gifts'])
 
     assert get_graph_input([['Category', ' Your Expense'],
                                     ['Food', '100'],
@@ -63,7 +63,7 @@ def test_get_graph_input():
                                                         ['Travel', '200'], 
                                                         ['Entertainment', '100'], 
                                                         ['Gifts', '200']]) == ([100, 50, 100, 50, 0],
-                                                                                    [800, 200, 200, 100, 200], 
-                                                                                    ['Food', 'Stationary', 'Travel', 'Entertainment', 'Gifts'])
+                                                                                [800, 200, 200, 100, 200], 
+                                                                                ['Food', 'Stationary', 'Travel', 'Entertainment', 'Gifts'])
 
 

@@ -1,11 +1,16 @@
 from expenses import Expenses
 import matplotlib.pyplot as plt
+from pyfiglet import Figlet
 import numpy as np
 import csv
 
 
 def main():
-    print("1.Add your expenses\n2.See the expense chart\n3.Clear your expense history\n(Enter the option you wish to choose)")
+    figlet = Figlet(font="weird")
+    print(figlet.renderText("|welcome|"))
+    print(
+        "1.Add your expenses\n2.See the expense chart\n3.Clear your expense history\n(Enter the option you wish to choose)"
+    )
     while True:
         try:
             option = int(input())
@@ -15,7 +20,9 @@ def main():
                 break
             elif option == 2:
                 expense_chart()
-                print("Chart Updated Successfully!!!\nOpen 'expense_chart.png' to see the results :)")
+                print(
+                    "Chart Updated Successfully!!!\nOpen 'expense_chart.png' to see the results :)"
+                )
                 break
             elif option == 3:
                 Expenses.clear_my_expense()
@@ -38,39 +45,43 @@ def add_expenses():
                 try:
                     your_category = input("Enter Category: ")
                     your_expense = int(input("Expense: Rs."))
-                    your_category, your_expense = validate_input(your_category, your_expense)
+                    your_category, your_expense = validate_input(
+                        your_category, your_expense
+                    )
                     break
                 except ValueError:
                     pass
             my_expense = Expenses.get_my_expense()
-            my_expense.remove(my_expense[0]) 
-            new_expense = append_expense(my_expense, your_category, your_expense)        
-            Expenses.write_my_expense(my_expense)  
-            print("Expense Added!! (Press Ctrl+D if you wish to exit)") 
+            my_expense.remove(my_expense[0])
+            new_expense = append_expense(my_expense, your_category, your_expense)
+            Expenses.write_my_expense(my_expense)
+            print("Expense Added!! (Press Ctrl+D if you wish to exit)")
         except EOFError:
             break
-              
 
-def expense_chart(barwidth = 0.25):
+
+def expense_chart(barwidth=0.25):
     fig = plt.subplots(figsize=(12, 8))
 
-    your_expense, max_budget, categories = get_graph_input(Expenses.get_my_expense(), get_budget("max_budget.csv"))
+    your_expense, max_budget, categories = get_graph_input(
+        Expenses.get_my_expense(), get_budget("max_budget.csv")
+    )
 
     br1 = np.arange(len(your_expense))
     br2 = np.array(br1, dtype=float) + barwidth
-        
-    plt.bar(br1, your_expense, width = barwidth, edgecolor = 'black', label = 'Expense')
-    plt.bar(br2, max_budget, color ='r', width = barwidth, edgecolor = 'black', label = 'Budget')
 
-    plt.title('Expenses Chart', fontsize = 20, fontweight ='bold')
-    plt.xlabel('Category', fontweight ='bold', fontsize = 15) 
-    plt.ylabel('Expenses', fontweight ='bold', fontsize = 15) 
-    plt.xticks([r + (barwidth/2) for r in range(len(your_expense))], categories)
+    plt.bar(br1, your_expense, width=barwidth, edgecolor="black", label="Expense")
+    plt.bar(br2, max_budget, color="r", width=barwidth, edgecolor="black", label="Budget")
+
+    plt.title("Expenses Chart", fontsize=20, fontweight="bold")
+    plt.xlabel("Category", fontweight="bold", fontsize=15)
+    plt.ylabel("Expenses", fontweight="bold", fontsize=15)
+    plt.xticks([r + (barwidth / 2) for r in range(len(your_expense))], categories)
 
     plt.legend()
-    plt.savefig('expense_chart.png')
+    plt.savefig("expense_chart.png")
     plt.show()
-  
+
 
 def get_budget(filename):
     budget = []
@@ -91,11 +102,11 @@ def append_expense(my_list, your_category, your_expense):
     return my_list
 
 
-def get_graph_input(list1, list2):   
+def get_graph_input(list1, list2):
     list1.remove(list1[0])
     your_expense = [int(row[1]) for row in list1]
-    
-    list2.remove(list2[0])    
+
+    list2.remove(list2[0])
     max_budget = [int(row[1]) for row in list2]
     categories = [row[0] for row in list2]
 
@@ -104,7 +115,7 @@ def get_graph_input(list1, list2):
 
 def validate_input(category, expense):
     category = category.strip().capitalize()
-    categories = ['Food', 'Stationary', 'Travel', 'Entertainment', 'Gifts']
+    categories = ["Food", "Stationary", "Travel", "Entertainment", "Gifts"]
     if not category in categories or not category:
         print("Invalid Category, did not add expense")
         raise ValueError()
@@ -112,7 +123,6 @@ def validate_input(category, expense):
         print("Invalid Expense, did not add expense")
         raise ValueError()
     return category, expense
-
 
 
 if __name__ == "__main__":
