@@ -1,6 +1,7 @@
 from expenses import Expenses
 import matplotlib.pyplot as plt
 from pyfiglet import Figlet
+from tabulate import tabulate
 import numpy as np
 import csv
 
@@ -21,7 +22,7 @@ def main():
             elif option == 2:
                 expense_chart()
                 print(
-                    "Chart Updated Successfully!!!\nOpen 'expense_chart.png' to see the results :)"
+                    "Chart Updated!\nOpen 'expense_chart.png' to see the results :)"
                 )
                 break
             elif option == 3:
@@ -61,6 +62,9 @@ def add_expenses():
 
 
 def expense_chart(barwidth=0.25):
+    print("Your expenses so far..")
+    print(table_format(Expenses.get_my_expense()))
+
     fig = plt.subplots(figsize=(12, 8))
 
     your_expense, max_budget, categories = get_graph_input(
@@ -124,6 +128,10 @@ def validate_input(category, expense):
         raise ValueError()
     return category, expense
 
+
+def table_format(lst):
+    header = lst.pop(0)
+    return tabulate(lst, header, tablefmt = 'grid')
 
 if __name__ == "__main__":
     main()
