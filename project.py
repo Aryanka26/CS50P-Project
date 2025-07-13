@@ -10,7 +10,7 @@ def main():
     figlet = Figlet(font="weird")
     print(figlet.renderText("|welcome|"))
     print(
-        "1.Add your expenses\n2.See the expense chart\n3.Clear your expense history\n(Enter the option you wish to choose)"
+        "1.Add expense\n2.View Summary\n3.Clear History\n(Enter the option you wish to choose)"
     )
     while True:
         try:
@@ -45,7 +45,7 @@ def add_expenses():
             while True:
                 try:
                     your_category = input("Enter Category: ")
-                    your_expense = int(input("Expense: Rs."))
+                    your_expense = int(input("Enter Amount Spent: Rs."))
                     your_category, your_expense = validate_input(
                         your_category, your_expense
                     )
