@@ -5,10 +5,13 @@ from tabulate import tabulate
 import numpy as np
 import csv
 
-
+# main function 
 def main():
+    # prints a "welcome message"
     figlet = Figlet(font="weird")
     print(figlet.renderText("|welcome|"))
+
+    # Asks user for an option
     print(
         "1.Add expense\n2.View Summary\n3.Clear History\n(Enter the option you wish to choose)"
     )
@@ -37,11 +40,15 @@ def main():
             pass
 
 
+# option 1
 def add_expenses():
     print("In add expenses...")
     print("Categories :-\n-Food\n-Stationary\n-Travel\n-Entertainment\n-Gifts")
+    
+    # This loop is used to allow the user to add multiple expenses until they press 'Ctrl + D'
     while True:
         try:
+            # asks user to enter category and amount spent.
             while True:
                 try:
                     your_category = input("Enter Category: ")
@@ -52,41 +59,54 @@ def add_expenses():
                     break
                 except ValueError:
                     pass
+
+            # adds the expenses according to the category to my_expense csv file
             my_expense = Expenses.get_my_expense()
             my_expense.remove(my_expense[0])
             new_expense = append_expense(my_expense, your_category, your_expense)
             Expenses.write_my_expense(my_expense)
+
             print("Expense Added!! (Press Ctrl+D if you wish to exit)")
         except EOFError:
             break
 
-
+# option 2
 def expense_chart(barwidth=0.25):
+    # shows user's expense history in a tabular format
     print("Your expenses so far..")
     print(table_format(Expenses.get_my_expense()))
+    
+    #generates a graph comparing user's expenses to their budget
 
+    #generates a figure of size 12 by 8
     fig = plt.subplots(figsize=(12, 8))
 
+    # gets the necessary lists for generating graphs
     your_expense, max_budget, categories = get_graph_input(
         Expenses.get_my_expense(), get_budget("max_budget.csv")
     )
 
+    # lists containing positions of each bar, br1 for user's expenses and br2 for the budget
     br1 = np.arange(len(your_expense))
     br2 = np.array(br1, dtype=float) + barwidth
 
+    # plots bar graphs
     plt.bar(br1, your_expense, width=barwidth, edgecolor="black", label="Expense")
     plt.bar(br2, max_budget, color="r", width=barwidth, edgecolor="black", label="Budget")
 
+    # adds title and labels
     plt.title("Expenses Chart", fontsize=20, fontweight="bold")
     plt.xlabel("Category", fontweight="bold", fontsize=15)
     plt.ylabel("Expenses", fontweight="bold", fontsize=15)
     plt.xticks([r + (barwidth / 2) for r in range(len(your_expense))], categories)
 
+    # adds a legend
     plt.legend()
+    # saves the graph in a file
     plt.savefig("expense_chart.png")
     plt.show()
 
-
+# gets a list of budget from csv file
 def get_budget(filename):
     budget = []
     with open(filename) as file:
@@ -95,7 +115,7 @@ def get_budget(filename):
             budget.append(row)
     return budget
 
-
+# adds expense entered by user
 def append_expense(my_list, your_category, your_expense):
     for row in my_list:
         category = row[0]
@@ -105,7 +125,7 @@ def append_expense(my_list, your_category, your_expense):
             row[1] = expense
     return my_list
 
-
+# gets necessary graph inputs
 def get_graph_input(list1, list2):
     list1.remove(list1[0])
     your_expense = [int(row[1]) for row in list1]
@@ -116,7 +136,7 @@ def get_graph_input(list1, list2):
 
     return your_expense, max_budget, categories
 
-
+# validates category and amount spent
 def validate_input(category, expense):
     category = category.strip().capitalize()
     categories = ["Food", "Stationary", "Travel", "Entertainment", "Gifts"]
@@ -128,7 +148,7 @@ def validate_input(category, expense):
         raise ValueError()
     return category, expense
 
-
+# changes the list into a tabular format
 def table_format(lst):
     header = lst.pop(0)
     return tabulate(lst, header, tablefmt = 'grid')
