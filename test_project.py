@@ -1,7 +1,7 @@
 import pytest
-from project import append_expense
-from project import get_graph_input
-from project import validate_input
+from project import (append_expense, 
+                    get_graph_input,
+                    validate_input)
 
 
 def test_validate_input():
