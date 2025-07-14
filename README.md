@@ -46,19 +46,28 @@ This program was developed as the final project for the **CS50P Python Programmi
 - `3` – Clear History  
 - If invalid input is entered (like the option name or an incorrect number), the user is prompted again.
 
-3. **Add Expense**  
+3. **If Add Expense is selected**    
 - A list of categories is shown: `Food`, `Stationery`, `Travel`, `Entertainment`, `Gifts`.
 - The user enters:
   - A valid category from the list
   - The amount spent (e.g., `150`)
 - If **either** input is invalid (e.g., unlisted category, non-numeric or negative amount), the user is prompted to re-enter both.
 - The user can continue entering multiple expenses. Pressing `Ctrl + D` stops the entry process.
-4. **View Summary**  
+4. **If View Summary is selected**  
 - The user sees a full table of past expenses.
 - A bar graph is generated and saved in a file 'expense_chart.png' comparing actual spending vs. the budget.
 
-5. **Clear History**  
-- Deletes all existing data from the CSV file for a fresh start.
+5. **If Clear History is selected**    
+- All existing data from the CSV file is reset for a fresh start.
 
----
+
+## File Descriptions
+
+- `README.md`: This file contains a description of my project.  
+- `expenses.py`: This python file has a class called "Expenses" which contains all the necessary funtions for manipulating expense data.  
+- `max_budget.csv`: This csv file contains maximum budget there is respective to each category. 
+- `my_expense.csv`: This csv file stores user's expenses with respect to each category.
+- `project.py`: This python file contains the final part of the project.  
+- `requirements.txt`: This file contains names of all pip-installable libraries required for my project. 
+- `test_project.py`: This is the test file for my project. It contains test funtions, so when run (using 'pytest test_project.py') it checks a few functions of the project.py file.  
 
