@@ -5,7 +5,7 @@ class Expenses:
     @classmethod
     def get_my_expense(cls):
         my_expense = []
-        with open("my_expense.csv") as file:
+        with open("my_expenses.csv") as file:
             reader = csv.reader(file)
             for row in reader:
                 my_expense.append(row)
@@ -13,7 +13,7 @@ class Expenses:
 
     @classmethod
     def write_my_expense(cls, my_expense):
-        with open("my_expense.csv", "w") as file:
+        with open("my_expenses.csv", "w") as file:
             writer = csv.writer(file)
             writer.writerow(["Category", "Your Expense"])
             for row in my_expense:
@@ -29,7 +29,7 @@ class Expenses:
             ["Entertainment", "0"],
             ["Gifts", "0"]
         ]
-        with open("my_expense.csv", "w") as file:
+        with open("my_expenses.csv", "w") as file:
             writer = csv.writer(file)
             for row in cleared_expenses:
                 writer.writerow(row)
