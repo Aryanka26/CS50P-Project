@@ -66,7 +66,7 @@ This program was developed as the final project for the **CS50P Python Programmi
 - `README.md`: This file contains a description of my project.  
 - `expenses.py`: This python file has a class called "Expenses" which contains all the necessary funtions for manipulating expense data.  
 - `max_budget.csv`: This csv file contains maximum budget there is respective to each category. 
-- `my_expense.csv`: This csv file stores user's expenses with respect to each category.
+- `my_expenses.csv`: This csv file stores user's expenses with respect to each category.
 - `project.py`: This python file contains the final part of the project.  
 - `requirements.txt`: This file contains names of all pip-installable libraries required for my project. 
 - `test_project.py`: This is the test file for my project. It contains test funtions, so when run (using 'pytest test_project.py') it checks a few functions of the project.py file.  
