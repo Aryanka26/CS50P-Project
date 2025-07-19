@@ -2,3 +2,5 @@ pytest
 pyfiglet
 black
 tabulate
+matplotlip
+numpy
