@@ -1,5 +1,14 @@
 import csv
 
+EXPENSES_TEMPLATE = [
+            ["Category", "Your Expense"],
+            ["Food", "0"],
+            ["Stationary", "0"],
+            ["Travel", "0"],
+            ["Entertainment", "0"],
+            ["Gifts", "0"]
+        ]
+
 
 class Expenses:
     @classmethod
@@ -21,15 +30,7 @@ class Expenses:
 
     @classmethod
     def clear_my_expenses(cls):
-        cleared_expenses = [
-            ["Category", "Your Expense"],
-            ["Food", "0"],
-            ["Stationary", "0"],
-            ["Travel", "0"],
-            ["Entertainment", "0"],
-            ["Gifts", "0"]
-        ]
         with open("my_expenses.csv", "w") as file:
             writer = csv.writer(file)
-            for row in cleared_expenses:
+            for row in EXPENSES_TEMPLATE:
                 writer.writerow(row)
