@@ -20,7 +20,8 @@ CATEGORIES = """Categories :-
 -Gifts
 """
 
-# main function 
+
+# main function
 def main():
     # prints a "welcome message"
     figlet = Figlet(font="weird")
@@ -37,9 +38,7 @@ def main():
                 break
             elif option == 2:
                 expense_chart()
-                print(
-                    "Chart Updated!\nOpen 'expense_chart.png' to see the results :)"
-                )
+                print("Chart Updated!\nOpen 'expense_chart.png' to see the results :)")
                 break
             elif option == 3:
                 Expenses.clear_my_expenses()
@@ -57,7 +56,7 @@ def main():
 def add_expenses():
     print("In add expenses...")
     print(CATEGORIES)
-    
+
     # This loop is used to allow the user to add multiple expenses until they press 'Ctrl + D'
     while True:
         try:
@@ -83,15 +82,16 @@ def add_expenses():
         except EOFError:
             break
 
+
 # option 2
 def expense_chart(barwidth=0.25):
     # shows user's expense history in a tabular format
     print("Your expenses so far..")
     print(table_format(Expenses.get_my_expenses()))
-    
-    #generates a graph comparing user's expenses to their budget
 
-    #generates a figure of size 12 by 8
+    # generates a graph comparing user's expenses to their budget
+
+    # generates a figure of size 12 by 8
     fig = plt.subplots(figsize=(12, 8))
 
     # gets the necessary lists for generating graphs
@@ -105,7 +105,9 @@ def expense_chart(barwidth=0.25):
 
     # plots bar graphs
     plt.bar(br1, your_expenses, width=barwidth, edgecolor="black", label="Expense")
-    plt.bar(br2, max_budget, color="r", width=barwidth, edgecolor="black", label="Budget")
+    plt.bar(
+        br2, max_budget, color="r", width=barwidth, edgecolor="black", label="Budget"
+    )
 
     # adds title and labels
     plt.title("Expenses Chart", fontsize=20, fontweight="bold")
@@ -119,6 +121,7 @@ def expense_chart(barwidth=0.25):
     plt.savefig("expense_chart.png")
     plt.show()
 
+
 # gets a list of budget from csv file
 def get_budget(filename):
     budget = []
@@ -127,6 +130,7 @@ def get_budget(filename):
         for row in reader:
             budget.append(row)
     return budget
+
 
 # adds expense entered by user
 def append_expense(my_list, your_category, your_expense):
@@ -138,6 +142,7 @@ def append_expense(my_list, your_category, your_expense):
             row[1] = expense
     return my_list
 
+
 # gets necessary graph inputs
 def get_graph_input(list1, list2):
     list1.remove(list1[0])
@@ -148,6 +153,7 @@ def get_graph_input(list1, list2):
     categories = [row[0] for row in list2]
 
     return your_expense, max_budget, categories
+
 
 # validates category and amount spent
 def validate_input(category, expense):
@@ -161,10 +167,12 @@ def validate_input(category, expense):
         raise ValueError()
     return category, expense
 
+
 # changes the list into a tabular format
 def table_format(lst):
     header = lst.pop(0)
-    return tabulate(lst, header, tablefmt = 'grid')
+    return tabulate(lst, header, tablefmt="grid")
+
 
 if __name__ == "__main__":
     main()

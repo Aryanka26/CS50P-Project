@@ -1,13 +1,13 @@
 import csv
 
 EXPENSES_TEMPLATE = [
-            ["Category", "Your Expense"],
-            ["Food", "0"],
-            ["Stationary", "0"],
-            ["Travel", "0"],
-            ["Entertainment", "0"],
-            ["Gifts", "0"]
-        ]
+    ["Category", "Your Expense"],
+    ["Food", "0"],
+    ["Stationary", "0"],
+    ["Travel", "0"],
+    ["Entertainment", "0"],
+    ["Gifts", "0"],
+]
 
 
 class Expenses:
