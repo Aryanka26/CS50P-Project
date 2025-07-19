@@ -1,6 +1,6 @@
 # CS50P-Project : Student Budget Handler
 My final project for the CS50P Python course.   
-Video Demo:  <URL HERE>
+Video Demo:  https://youtu.be/8W1AeiSIwBg
 
 ## Description
 **Student Budget Handler** is a Python-based application designed to help students effectively manage their monthly allowance. Whether it's tracking lunch expenses or budgeting for gifts, this tool provides a simple way to stay financially organized.
