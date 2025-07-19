@@ -5,6 +5,21 @@ from tabulate import tabulate
 import numpy as np
 import csv
 
+MENU = """1.Add expense
+2.View Summary
+3.Clear History
+
+(Enter the option you wish to choose)
+"""
+
+CATEGORIES = """Categories :-
+-Food
+-Stationary
+-Travel
+-Entertainment
+-Gifts
+"""
+
 # main function 
 def main():
     # prints a "welcome message"
@@ -12,9 +27,7 @@ def main():
     print(figlet.renderText("|welcome|"))
 
     # Asks user for an option
-    print(
-        "1.Add expense\n2.View Summary\n3.Clear History\n(Enter the option you wish to choose)"
-    )
+    print(MENU)
     while True:
         try:
             option = int(input())
@@ -29,7 +42,7 @@ def main():
                 )
                 break
             elif option == 3:
-                Expenses.clear_my_expense()
+                Expenses.clear_my_expenses()
                 print("Your expenses history is cleared!!!")
                 break
             else:
@@ -43,7 +56,7 @@ def main():
 # option 1
 def add_expenses():
     print("In add expenses...")
-    print("Categories :-\n-Food\n-Stationary\n-Travel\n-Entertainment\n-Gifts")
+    print(CATEGORIES)
     
     # This loop is used to allow the user to add multiple expenses until they press 'Ctrl + D'
     while True:
@@ -60,13 +73,13 @@ def add_expenses():
                 except ValueError:
                     pass
 
-            # adds the expenses according to the category to my_expense csv file
-            my_expense = Expenses.get_my_expense()
-            my_expense.remove(my_expense[0])
-            new_expense = append_expense(my_expense, your_category, your_expense)
-            Expenses.write_my_expense(my_expense)
+            # adds the expenses according to the category to my_expenses csv file
+            my_expenses = Expenses.get_my_expenses()
+            my_expenses.remove(my_expenses[0])
+            new_expenses = append_expense(my_expenses, your_category, your_expense)
+            Expenses.write_my_expenses(new_expenses)
 
-            print("Expense Added!! (Press Ctrl+D if you wish to exit)")
+            print("Expense Added!! (Press Ctrl+D if you wish to exit)\n")
         except EOFError:
             break
 
@@ -74,7 +87,7 @@ def add_expenses():
 def expense_chart(barwidth=0.25):
     # shows user's expense history in a tabular format
     print("Your expenses so far..")
-    print(table_format(Expenses.get_my_expense()))
+    print(table_format(Expenses.get_my_expenses()))
     
     #generates a graph comparing user's expenses to their budget
 
@@ -82,23 +95,23 @@ def expense_chart(barwidth=0.25):
     fig = plt.subplots(figsize=(12, 8))
 
     # gets the necessary lists for generating graphs
-    your_expense, max_budget, categories = get_graph_input(
-        Expenses.get_my_expense(), get_budget("max_budget.csv")
+    your_expenses, max_budget, categories = get_graph_input(
+        Expenses.get_my_expenses(), get_budget("max_budget.csv")
     )
 
     # lists containing positions of each bar, br1 for user's expenses and br2 for the budget
-    br1 = np.arange(len(your_expense))
+    br1 = np.arange(len(your_expenses))
     br2 = np.array(br1, dtype=float) + barwidth
 
     # plots bar graphs
-    plt.bar(br1, your_expense, width=barwidth, edgecolor="black", label="Expense")
+    plt.bar(br1, your_expenses, width=barwidth, edgecolor="black", label="Expense")
     plt.bar(br2, max_budget, color="r", width=barwidth, edgecolor="black", label="Budget")
 
     # adds title and labels
     plt.title("Expenses Chart", fontsize=20, fontweight="bold")
     plt.xlabel("Category", fontweight="bold", fontsize=15)
     plt.ylabel("Expenses", fontweight="bold", fontsize=15)
-    plt.xticks([r + (barwidth / 2) for r in range(len(your_expense))], categories)
+    plt.xticks([r + (barwidth / 2) for r in range(len(your_expenses))], categories)
 
     # adds a legend
     plt.legend()
@@ -141,10 +154,10 @@ def validate_input(category, expense):
     category = category.strip().capitalize()
     categories = ["Food", "Stationary", "Travel", "Entertainment", "Gifts"]
     if not category in categories or not category:
-        print("Invalid Category, did not add expense")
+        print("Invalid Category, did not add expense\n")
         raise ValueError()
     if expense < 0:
-        print("Invalid Expense, did not add expense")
+        print("Invalid Expense, did not add expense\n")
         raise ValueError()
     return category, expense
 

@@ -3,24 +3,24 @@ import csv
 
 class Expenses:
     @classmethod
-    def get_my_expense(cls):
-        my_expense = []
+    def get_my_expenses(cls):
+        my_expenses = []
         with open("my_expenses.csv") as file:
             reader = csv.reader(file)
             for row in reader:
-                my_expense.append(row)
-        return my_expense
+                my_expenses.append(row)
+        return my_expenses
 
     @classmethod
-    def write_my_expense(cls, my_expense):
+    def write_my_expenses(cls, my_expenses):
         with open("my_expenses.csv", "w") as file:
             writer = csv.writer(file)
             writer.writerow(["Category", "Your Expense"])
-            for row in my_expense:
+            for row in my_expenses:
                 writer.writerow(row)
 
     @classmethod
-    def clear_my_expense(cls):
+    def clear_my_expenses(cls):
         cleared_expenses = [
             ["Category", "Your Expense"],
             ["Food", "0"],
